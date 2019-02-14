@@ -2,6 +2,7 @@
 	$___notjson=1;
 	header('Content-Type: text/html; charset=utf-8');
 	setlocale(LC_ALL, 'ru_RU.65001', 'rus_RUS.65001', 'Russian_Russia. 65001', 'russian');
+	error_reporting(0);
 
 	$PASSWORD_MD5 = 'YOUR PASSWORD MD5 HASH';
 
@@ -307,12 +308,12 @@
 			$dom->encoding = "utf-8";
 			if ($dom->load("recalls_admin_data.xml"))
 			{
-				$response = add_recall($dom, FALSE, $_POST['date'], $_POST['name'], $_POST['email'], $_POST['text']);
+				$response = add_recall($dom, FALSE, trim(strip_tags($_POST['date'])), trim(strip_tags($_POST['name'])), trim(strip_tags($_POST['email'])), trim(strip_tags($_POST['text'])));
 			}
 			else
 			{
 				$dom = create_xml_document($dom);
-				add_recall($dom, FALSE, $_POST['date'], $_POST['name'], $_POST['email'], $_POST['text']);
+				$response = add_recall($dom, FALSE, trim(strip_tags($_POST['date'])), trim(strip_tags($_POST['name'])), trim(strip_tags($_POST['email'])), trim(strip_tags($_POST['text'])));
 			}
 			$dom->save('recalls_admin_data.xml');
 			echo $response;
